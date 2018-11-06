@@ -20,4 +20,12 @@ RUN set -x \
 		openjdk8="$JAVA_ALPINE_VERSION" \
 && [ "$JAVA_HOME" = "$(docker-java-home)" ]
 
-RUN apk add --no-cache wget && apk add --no-cache openssh && wget https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-3.2.0.1227-linux.zip && \ unzip sonar-scanner-cli-3.2.0.1227-linux.zip && \ cd /usr/bin && ln -s /sonar-scanner-3.2.0.1227-linux/bin/sonar-scanner sonar-scanner && \ apk del wget && \ ln -s /usr/bin/sonar-scanner-run.sh /bin/sonar-scanner COPY sonar-scanner-run.sh /usr/bin && apk del wget
+RUN apk add --no-cache openssh
+
+ENV SONAR_SCANNER_VERSION 3.2.0.1227 	
+
+RUN apk add --no-cache wget && \ 
+    wget https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-${SONAR_SCANNER_VERSION}.zip && \ 
+    unzip sonar-scanner-cli-${SONAR_SCANNER_VERSION} && \ 
+    cd /usr/bin && ln -s /sonar-scanner-${SONAR_SCANNER_VERSION}/bin/sonar-scanner sonar-scanner && \ 
+    apk del wget
