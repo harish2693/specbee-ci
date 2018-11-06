@@ -20,6 +20,8 @@ RUN set -x \
 		openjdk8="$JAVA_ALPINE_VERSION" \
 && [ "$JAVA_HOME" = "$(docker-java-home)" ]
 
+RUN apk add --no-cache bash
+
 RUN apk add --no-cache openssh
 
 ENV SONAR_SCANNER_VERSION 3.2.0.1227 	
