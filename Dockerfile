@@ -1,4 +1,4 @@
-FROM node:10-alpine
+FROM alpine:3.8
 
 ENV LANG C.UTF-8
 
@@ -26,8 +26,10 @@ RUN apk add --no-cache openssh
 
 ENV SONAR_SCANNER_VERSION 3.2.0.1227 	
 
+RUN apk add --update nodejs nodejs-npm
+
 RUN apk add --no-cache wget && \ 
     wget https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-${SONAR_SCANNER_VERSION}.zip && \ 
     unzip sonar-scanner-cli-${SONAR_SCANNER_VERSION} && \ 
     cd /usr/bin && ln -s /sonar-scanner-${SONAR_SCANNER_VERSION}/bin/sonar-scanner sonar-scanner && \ 
-    apk del wget
+apk del wget
